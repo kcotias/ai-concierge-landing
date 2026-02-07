@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Concierge — Seu Assistente de IA, Configurado Para Você</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #0f172a;
+            --text: #334155;
+            --text-light: #64748b;
+            --bg: #ffffff;
+            --bg-subtle: #f8fafc;
+            --border: #e2e8f0;
+            --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation */
+        nav {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--secondary);
+            text-decoration: none;
+        }
+
+        .logo span {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-cta {
+            background: var(--gradient);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 100px 0 80px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 24px;
+        }
+
+        .hero-badge span {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            color: var(--secondary);
+            line-height: 1.1;
+            margin-bottom: 24px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h1 span {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gradient);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+        }
+
+        .hero-note {
+            margin-top: 16px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* Problem Section */
+        .problem {
+            padding: 80px 0;
+            background: var(--bg-subtle);
+        }
+
+        .section-label {
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .problem-card {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .problem-icon {
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+
+        .problem-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 8px;
+        }
+
+        .problem-card p {
+            color: var(--text-light);
+        }
+
+        /* Solution Section */
+        .solution {
+            padding: 100px 0;
+        }
+
+        .solution-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .solution-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        .solution-text h2 {
+            margin-bottom: 24px;
+        }
+
+        .solution-text p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .feature-list .check {
+            width: 24px;
+            height: 24px;
+            background: #dcfce7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #16a34a;
+            flex-shrink: 0;
+            font-size: 0.8rem;
+        }
+
+        .solution-visual {
+            background: var(--gradient);
+            border-radius: 24px;
+            padding: 40px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .solution-visual::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(50%, -50%);
+        }
+
+        .chat-bubble {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 16px 20px;
+            border-radius: 16px;
+            margin-bottom: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .chat-bubble.user {
+            margin-left: 40px;
+            background: white;
+            color: var(--secondary);
+        }
+
+        .chat-label {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            margin-bottom: 4px;
+        }
+
+        /* How it Works */
+        .how-it-works {
+            padding: 100px 0;
+            background: var(--bg-subtle);
+        }
+
+        .how-it-works h2 {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+        }
+
+        .step {
+            text-align: center;
+            padding: 32px;
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin: 0 auto 20px;
+        }
+
+        .step h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 8px;
+        }
+
+        .step p {
+            color: var(--text-light);
+        }
+
+        /* Pricing */
+        .pricing {
+            padding: 100px 0;
+        }
+
+        .pricing h2 {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .pricing-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 60px;
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
+        }
+
+        .pricing-card.featured::before {
+            content: 'Mais popular';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient);
+            color: white;
+            padding: 4px 16px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 8px;
+        }
+
+        .pricing-card .desc {
+            color: var(--text-light);
+            margin-bottom: 24px;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-light);
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 32px 0;
+        }
+
+        .pricing-features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .pricing-cta {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .pricing-card .pricing-cta {
+            background: var(--bg-subtle);
+            color: var(--secondary);
+            border: 1px solid var(--border);
+        }
+
+        .pricing-card .pricing-cta:hover {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .pricing-card.featured .pricing-cta {
+            background: var(--gradient);
+            color: white;
+            border: none;
+        }
+
+        .pricing-card.featured .pricing-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Testimonial */
+        .testimonial {
+            padding: 100px 0;
+            background: var(--secondary);
+            color: white;
+        }
+
+        .testimonial-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .testimonial-quote {
+            font-size: 1.75rem;
+            font-weight: 500;
+            line-height: 1.4;
+            margin-bottom: 32px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .testimonial-avatar {
+            width: 56px;
+            height: 56px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .testimonial-info h4 {
+            font-weight: 600;
+        }
+
+        .testimonial-info p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            margin-bottom: 16px;
+        }
+
+        .cta-section p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .hero {
+                padding: 60px 0 40px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .problem, .solution, .how-it-works, .pricing, .testimonial, .cta-section {
+                padding: 60px 0;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="#" class="logo">AI <span>Concierge</span></a>
+            <a href="#contato" class="nav-cta">Agendar Conversa</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-badge">✨ <span>Vagas limitadas</span> — Serviço personalizado</div>
+            <h1>Seu assistente de IA, <span>configurado para você</span></h1>
+            <p class="hero-subtitle">Nós configuramos, treinamos e mantemos seu assistente de IA pessoal. Você só usa — sem dor de cabeça técnica.</p>
+            <a href="#contato" class="hero-cta">
+                Quero meu assistente
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+            <p class="hero-note">Resposta em até 24h • Sem compromisso</p>
+        </div>
+    </section>
+
+    <section class="problem">
+        <div class="container">
+            <p class="section-label">O problema</p>
+            <h2>IA é incrível. Configurar é um pesadelo.</h2>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">😵‍💫</div>
+                    <h3>Muitas opções, zero clareza</h3>
+                    <p>ChatGPT, Claude, Gemini, agentes, automações... por onde começar? E o que realmente funciona?</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">⏰</div>
+                    <h3>Você não tem tempo</h3>
+                    <p>Entre reuniões, clientes e vida pessoal, aprender a configurar IA vira mais uma tarefa na lista infinita.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">🔧</div>
+                    <h3>Tecnologia muda toda semana</h3>
+                    <p>O que funcionava ontem já ficou obsoleto. Manter-se atualizado virou trabalho em tempo integral.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="solution">
+        <div class="container">
+            <div class="solution-content">
+                <div class="solution-text">
+                    <p class="section-label">A solução</p>
+                    <h2>White-glove AI setup para quem tem mais o que fazer</h2>
+                    <p>Nós cuidamos de toda a parte técnica. Você recebe um assistente de IA personalizado, treinado com suas informações e integrado à sua rotina.</p>
+                    <ul class="feature-list">
+                        <li>
+                            <span class="check">✓</span>
+                            <span><strong>Setup completo</strong> — configuramos tudo do zero, do jeito certo</span>
+                        </li>
+                        <li>
+                            <span class="check">✓</span>
+                            <span><strong>Treinamento personalizado</strong> — seu assistente conhece seu contexto</span>
+                        </li>
+                        <li>
+                            <span class="check">✓</span>
+                            <span><strong>Integrações</strong> — WhatsApp, email, calendário, o que você precisar</span>
+                        </li>
+                        <li>
+                            <span class="check">✓</span>
+                            <span><strong>Suporte contínuo</strong> — problemas? Estamos aqui para resolver</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="solution-visual">
+                    <div class="chat-bubble">
+                        <div class="chat-label">🤖 Seu Assistente</div>
+                        <p>Bom dia! Você tem 3 reuniões hoje. A primeira é às 9h com a Dra. Fernanda. Quer que eu prepare um resumo do último encontro?</p>
+                    </div>
+                    <div class="chat-bubble user">
+                        <div class="chat-label">Você</div>
+                        <p>Sim, e manda pro meu WhatsApp</p>
+                    </div>
+                    <div class="chat-bubble">
+                        <div class="chat-label">🤖 Seu Assistente</div>
+                        <p>Pronto! Enviei o resumo e adicionei os pontos que vocês discutiram na última call. Algo mais?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works">
+        <div class="container">
+            <h2>Como funciona</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Conversa inicial</h3>
+                    <p>Entendemos sua rotina, desafios e o que você quer que seu assistente faça.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Configuração</h3>
+                    <p>Nossa equipe configura tudo: IA, integrações, automações, personalização.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Treinamento</h3>
+                    <p>Alimentamos o assistente com seu contexto, preferências e forma de trabalhar.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Você só usa</h3>
+                    <p>Pronto! Seu assistente está ativo. Qualquer ajuste, a gente cuida.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="precos">
+        <div class="container">
+            <h2>Investimento</h2>
+            <p class="pricing-subtitle">Escolha o modelo que faz sentido para você</p>
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <h3>Setup</h3>
+                    <p class="desc">Configuração única + 30 dias de suporte</p>
+                    <div class="price">R$10k<span> único</span></div>
+                    <ul class="pricing-features">
+                        <li>Configuração completa do assistente</li>
+                        <li>Até 3 integrações (WhatsApp, email, etc)</li>
+                        <li>Treinamento com seu contexto</li>
+                        <li>30 dias de suporte incluso</li>
+                        <li>Documentação de uso</li>
+                    </ul>
+                    <a href="#contato" class="pricing-cta">Começar agora</a>
+                </div>
+                <div class="pricing-card featured">
+                    <h3>Premium</h3>
+                    <p class="desc">Setup + manutenção contínua</p>
+                    <div class="price">R$25k<span> + R$2k/mês</span></div>
+                    <ul class="pricing-features">
+                        <li>Tudo do plano Setup</li>
+                        <li>Integrações ilimitadas</li>
+                        <li>Automações personalizadas</li>
+                        <li>Suporte prioritário contínuo</li>
+                        <li>Atualizações mensais de IA</li>
+                        <li>Reuniões de otimização</li>
+                    </ul>
+                    <a href="#contato" class="pricing-cta">Falar com a equipe</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonial">
+        <div class="container">
+            <div class="testimonial-content">
+                <p class="testimonial-quote">"Eu não entendia nada de IA. Agora tenho um assistente que conhece minha rotina melhor que eu. Economizo pelo menos 2 horas por dia."</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">👨‍⚕️</div>
+                    <div class="testimonial-info">
+                        <h4>Dr. Ricardo M.</h4>
+                        <p>Médico, São Paulo</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section" id="contato">
+        <div class="container">
+            <h2>Pronto para ter seu assistente de IA?</h2>
+            <p>Vagas limitadas — trabalhamos com poucos clientes por vez para garantir qualidade.</p>
+            <a href="https://wa.me/5575982167878?text=Oi!%20Vi%20o%20site%20do%20AI%20Concierge%20e%20quero%20saber%20mais." class="hero-cta">
+                Falar pelo WhatsApp
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 AI Concierge. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>
